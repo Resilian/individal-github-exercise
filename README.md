@@ -1,3 +1,3 @@
 # individal-github-exercise
 
-This need to fill up later
+A code for merge sort is 
