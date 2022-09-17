@@ -1,123 +1,61 @@
-class Queue {
-    static private int front, rear, capacity;
-    static private int queue[];
- 
-    Queue(int c)
-    {
-        front = rear = 0;
-        capacity = c;
-        queue = new int[capacity];
+public class sort {
+    public static void main(String[] arg) {
+        double[] list = { 5, 60, 2, 41, 21, 53, 35, 96, 27, 25,
+                911, 200, 10, 2, 23, 65, 33, 44, 55, 1,
+                12, 22, 652, 82, 92, 102, 202, 201, 52, 12,
+                30, 40, 41, 5, 99, 100, 32, 46, 65, 17,
+                3, 5, 8, 9, 4, 652, 121, 325, 652, 214,
+                9.1, 7.2, 4.8, 12.4, 123.5, 32, 54, 6, 213, 678,
+                0, 76, 238, 187, 345, 45686, 231, 7, 54, 88,
+                100, 101, 102, 103, 104, 105, 106, 107, 1009, 1208 };
+
+        long start = System.currentTimeMillis();
+        mergeSort(list, list.length);
+        printList(list);
+        long end = System.currentTimeMillis();
+        System.out.println("Marge took: " + (end - start) + " milliseconds");
     }
- 
-    // function to insert an element
-    // at the rear of the queue
-    static void queueEnqueue(int data)
-    {
-        // check queue is full or not
-        if (capacity == rear) {
-            System.out.printf("\nQueue is full\n");
-            return;
-        }
- 
-        // insert element at the rear
-        else {
-            queue[rear] = data;
-            rear++;
-        }
-        return;
-    }
- 
-    // function to delete an element
-    // from the front of the queue
-    static void queueDequeue()
-    {
-        // if queue is empty
-        if (front == rear) {
-            System.out.printf("\nQueue is empty\n");
-            return;
-        }
- 
-        // shift all the elements from index 2 till rear
-        // to the right by one
-        else {
-            for (int i = 0; i < rear - 1; i++) {
-                queue[i] = queue[i + 1];
+
+    public static void merge(double[] a, double[] l, double[] r, int left, int right) {
+        int i = 0, j = 0, k = 0;
+        while (i < left && j < right) {
+            if (l[i] <= r[j]) {
+                a[k++] = l[i++];
+            } else {
+                a[k++] = r[j++];
             }
- 
-            // store 0 at rear indicating there's no element
-            if (rear < capacity)
-                queue[rear] = 0;
- 
-            // decrement rear
-            rear--;
         }
-        return;
+        while (i < left) {
+            a[k++] = l[i++];
+        }
+        while (j < right) {
+            a[k++] = r[j++];
+        }
     }
- 
-    // print queue elements
-    static void queueDisplay()
-    {
-        int i;
-        if (front == rear) {
-            System.out.printf("\nQueue is Empty\n");
+
+    public static void mergeSort(double[] a, int n) {
+        if (n < 2)
             return;
+        int half = n / 2;
+        double[] left = new double[half];
+        double[] right = new double[n - half];
+
+        for (int i = 0; i < half; i++) {
+            left[i] = a[i];
         }
- 
-        // traverse front to rear and print elements
-        for (i = front; i < rear; i++) {
-            System.out.printf(" %d <-- ", queue[i]);
+        for (int i = half; i < n; i++) {
+            right[i - half] = a[i];
         }
-        return;
+        mergeSort(left, half);
+        mergeSort(right, n - half);
+        merge(a, left, right, half, n - half);
     }
- 
-    // print front of queue
-    static void queueFront()
-    {
-        if (front == rear) {
-            System.out.printf("\nQueue is Empty\n");
-            return;
+
+    public static void printList(double[] a) {
+        System.out.print("\nList :");
+        for (int i = 0; i < a.length; i++) {
+            System.out.print(a[i] + ", ");
         }
-        System.out.printf("\nFront Element is: %d",
-                          queue[front]);
-        return;
-    }
-}
- 
-public class StaticQueueinjava {
- 
-    // Driver code
-    public static void main(String[] args)
-    {
-        // Create a queue of capacity 4
-        Queue q = new Queue(4);
- 
-        // print Queue elements
-        q.queueDisplay();
- 
-        // inserting elements in the queue
-        q.queueEnqueue(20);
-        q.queueEnqueue(30);
-        q.queueEnqueue(40);
-        q.queueEnqueue(50);
- 
-        // print Queue elements
-        q.queueDisplay();
- 
-        // insert element in the queue
-        q.queueEnqueue(60);
- 
-        // print Queue elements
-        q.queueDisplay();
- 
-        q.queueDequeue();
-        q.queueDequeue();
-        System.out.printf(
-            "\n\nafter two node deletion\n\n");
- 
-        // print Queue elements
-        q.queueDisplay();
- 
-        // print front of the queue
-        q.queueFront();
+        System.out.println("\n");
     }
 }
