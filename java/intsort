@@ -1,0 +1,61 @@
+public class sort {
+    public static void main(String[] arg) {
+        double[] list = { 5, 60, 2, 41, 21, 53, 35, 96, 27, 25,
+                911, 200, 10, 2, 23, 65, 33, 44, 55, 1,
+                12, 22, 652, 82, 92, 102, 202, 201, 52, 12,
+                30, 40, 41, 5, 99, 100, 32, 46, 65, 17,
+                3, 5, 8, 9, 4, 652, 121, 325, 652, 214,
+                9.1, 7.2, 4.8, 12.4, 123.5, 32, 54, 6, 213, 678,
+                0, 76, 238, 187, 345, 45686, 231, 7, 54, 88,
+                100, 101, 102, 103, 104, 105, 106, 107, 1009, 1208 };
+
+        long start = System.currentTimeMillis();
+        mergeSort(list, list.length);
+        printList(list);
+        long end = System.currentTimeMillis();
+        System.out.println("Marge took: " + (end - start) + " milliseconds");
+    }
+
+    public static void merge(double[] a, double[] l, double[] r, int left, int right) {
+        int i = 0, j = 0, k = 0;
+        while (i < left && j < right) {
+            if (l[i] <= r[j]) {
+                a[k++] = l[i++];
+            } else {
+                a[k++] = r[j++];
+            }
+        }
+        while (i < left) {
+            a[k++] = l[i++];
+        }
+        while (j < right) {
+            a[k++] = r[j++];
+        }
+    }
+
+    public static void mergeSort(double[] a, int n) {
+        if (n < 2)
+            return;
+        int half = n / 2;
+        double[] left = new double[half];
+        double[] right = new double[n - half];
+
+        for (int i = 0; i < half; i++) {
+            left[i] = a[i];
+        }
+        for (int i = half; i < n; i++) {
+            right[i - half] = a[i];
+        }
+        mergeSort(left, half);
+        mergeSort(right, n - half);
+        merge(a, left, right, half, n - half);
+    }
+
+    public static void printList(double[] a) {
+        System.out.print("\nList :");
+        for (int i = 0; i < a.length; i++) {
+            System.out.print(a[i] + ", ");
+        }
+        System.out.println("\n");
+    }
+}
